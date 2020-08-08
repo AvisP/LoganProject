@@ -57,7 +57,7 @@ for i =1:length(unique_syllable)
 %     FeatureMatrix_subset_info_undir.Mean_distance = Subset_distance_from_mean_undir;
     Mean_FileName_dir(i) = FeatureMatrix_subset_info.FileName(find(FeatureMatrix_subset_info.Mean_distance == min(Subset_distance_from_mean_dir)));
     Mean_FileName_undir(i) = FeatureMatrix_subset_info.FileName(find(FeatureMatrix_subset_info.Mean_distance == min(Subset_distance_from_mean_undir)));
-    explained_var_total(i,:) = explained;
+    
     Dataset_PCA = [ Dataset_PCA; FeatureMatrix_subset_info];
     
     clear FeatureMatrix_subset_info FeatureMatrix_subset_norm unique_syllable_dir_rows PCA_mean_subset_dir
@@ -65,12 +65,8 @@ for i =1:length(unique_syllable)
     clear coeff score latent tsquared explained
 end
 
-display('Mean Directed Files for individual subset');
-Mean_FileName_dir
 
 
-display('Mean Undirected Files for individual subset');
-Mean_FileName_undir
 
 % rng(2020) % for fair comparison
 % option_settings.MaxIter = 5000;
