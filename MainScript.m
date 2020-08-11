@@ -7,7 +7,7 @@ output_folder = 'F:\data_for_avishek\LoganProject\output\';
 dataset_name = 'redorng15';
 shift_time = 20*10^-3;  % Amount of set 
 
-plot_save_all_files = 0;
+plot_save_all_files = 0; % Set to 1 if want to save all files else set to 0
 
 dirf(strcat(parent_dir,'motif*.wav'),'motifbatch.txt');
 
@@ -45,7 +45,7 @@ for i=1:length(temp_list)
 
 
                 data_labels(counter) = strcat(temp_list(i),'_',char(labels(kk)));
-                syllable_labels(counter) = {char(labels(kk))};
+                syllable_labels(counter) = {lower(char(labels(kk)))};
                 FeatureMatrix(counter,:) = feature_vect_test_logan(timeSeriesData{counter},rate);
                 SamplingRate(counter) = rate;
                 counter = counter+1;
@@ -81,6 +81,15 @@ end
 
 SpectralMatrixTable = cell2table(SpectralMatrix','VariableNames',{'Spectrograms'});
 TotalDataTable = [ TotalDataTable SpectralMatrixTable];
+
+[unique_syllable,ia,ic] = unique(char(TotalDataTable.SyllableLabels),'stable');
+
+num_occurences = accumarray(ic,1);
+
+disp('Individual syllable --  Occurences')
+for i =1:length(unique_syllable)
+   display(['        ' unique_syllable(i) '           --   ' num2str(num_occurences(i))])    
+end
 
 save(strcat('Table_',dataset_name,'.mat'),'TotalDataTable')
 
