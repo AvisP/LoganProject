@@ -7,7 +7,7 @@ output_folder = 'F:\data_for_avishek\LoganProject\output\';
 dataset_name = 'redorng15';
 shift_time = 20*10^-3;  % Amount of set 
 
-plot_save_all_files = 0;
+plot_save_all_files = 'True';
 
 dirf(strcat(parent_dir,'motif*.wav'),'motifbatch.txt');
 
@@ -69,13 +69,10 @@ TotalDataTable = [T T2 T3 T1 FM];
 for i = 1:size(TotalDataTable,1)
     display(['Processing ',char(TotalDataTable.FileName(i))])
     sptemp = spec_plot_save(cell2mat(TotalDataTable.Audio(i)),TotalDataTable.SamplingRate(i),...
-        output_folder,char(TotalDataTable.FileName(i)),plot_save_all_files);
+        output_folder,char(TotalDataTable.FileName(i)),);
     SpectralMatrix(i) = {sptemp};
-    if plot_save_all_files
-        print('In Loop')
-        audiowrite(strcat(output_folder,char(TotalDataTable.FileName(i)),char(TotalDataTable.FileName(i)),'.wav'),...
-            cell2mat(TotalDataTable.Audio(i)),TotalDataTable.SamplingRate(i));
-    end
+    audiowrite(strcat(output_folder,char(TotalDataTable.FileName(i)),char(TotalDataTable.FileName(i)),'.wav'),...
+        cell2mat(TotalDataTable.Audio(i)),TotalDataTable.SamplingRate(i));
     clear sptemp
 end
 

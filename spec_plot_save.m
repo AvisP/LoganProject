@@ -1,4 +1,4 @@
-function [sptemp] = spec_plot_save(data,Fs,folder_loc,filename)
+function [sptemp] = spec_plot_save(data,Fs,folder_loc,filename,plot_save_all_files)
 
 % 
 
@@ -21,7 +21,9 @@ axis([t(1) t(end) 0 1e4]);vv=axis;
 caxis(((2^8)-1)*[0.75,1]);
 title(filename)
 % display(strcat(folder_loc,filename))
-print(strcat(folder_loc,filename,'.png'),'-dpng','-r200')
+if plot_save_all_files
+    print(strcat(folder_loc,filename,'.png'),'-dpng','-r200')
+end
 close
 
 
