@@ -19,6 +19,9 @@ for i =1:5%length(unique_syllable)
                                 'MeanLoudness'});
 %     FeatureMatrix_subset_info = TotalDataTable(rows,{'FileName'});
     FeatureMatrix_subset_norm = zscore(table2array(FeatureMatrix_subset));
+    if size(FeatureMatrix_subset_norm,1)<5
+        disp(['Skiping syllable ',char(unique_syllable(i)),' as it has less than 5 samples'])
+    else
 %     median(FeatureMatrix_subset_norm)
     [coeff,score,latent,tsquared,explained] = pca(FeatureMatrix_subset_norm);
     FeatureMatrix_subset_info = TotalDataTable(rows,{'FileName','SyllableLabels'});
@@ -66,15 +69,18 @@ for i =1:5%length(unique_syllable)
 %     Mean_FileName_dir(i) = FeatureMatrix_subset_info.FileName(find(FeatureMatrix_subset_info.Mean_distance == min(Subset_distance_from_mean_dir)));
 %     Mean_FileName_undir(i) = FeatureMatrix_subset_info.FileName(find(FeatureMatrix_subset_info.Mean_distance == min(Subset_distance_from_mean_undir)));
     Mean_FileName(i) = FeatureMatrix_subset_info.FileName(find(FeatureMatrix_subset_info.Mean_distance == min(Subset_distance_from_mean)));
-    if size(explained,1) == 1
-        explained =  cat(1,explained,[0;0;0;0;0]);
-    elseif size(explained,1) == 2
-        explained =  cat(1,explained,[0;0;0;0]);
-    elseif size(explained,1) == 3
-        explained = cat(1,explained,[0;0;0]);
-    elseif size(explained,1) == 4
-        explained = cat(1,explained,[0;0]);
-    elseif size(explained,1) == 5
+%     if size(explained,1) == 1
+%         explained =  cat(1,explained,[0;0;0;0;0]);
+%     elseif size(explained,1) == 2
+%         explained =  cat(1,explained,[0;0;0;0]);
+%     elseif size(explained,1) == 3
+%         explained = cat(1,explained,[0;0;0]);
+%     elseif size(explained,1) == 4
+%         explained = cat(1,explained,[0;0]);
+%     elseif size(explained,1) == 5
+%         explained = cat(1,explained,0);     
+%     end
+    if size(explained,1) == 5
         explained = cat(1,explained,0);     
     end
     explained_var_total(i,:) = explained;
@@ -83,7 +89,10 @@ for i =1:5%length(unique_syllable)
     clear FeatureMatrix_subset_info FeatureMatrix_subset_norm unique_syllable_dir_rows PCA_mean_subset_dir
     clear PCA_mean_subset_undir Subset_distance_from_mean_dir Subset_distance_from_mean_undir FeatureMatrix_subset
     clear coeff score latent tsquared explained
+    end
 end
+
+Mean_FileName(cellfun('isempty',Mean_FileName)) = [];
 
 disp('Mean Files for individual subset');
 Mean_FileName
