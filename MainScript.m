@@ -45,7 +45,7 @@ for i=1:length(temp_list)
 
 
                 data_labels(counter) = strcat(temp_list(i),'_',char(labels(kk)));
-                syllable_labels(counter) = {lower(char(labels(kk)))};
+                syllable_labels(counter) = {(char(labels(kk)))};
                 FeatureMatrix(counter,:) = feature_vect_test_logan(timeSeriesData{counter},rate);
                 SamplingRate(counter) = rate;
                 counter = counter+1;
