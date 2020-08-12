@@ -8,7 +8,7 @@ output_folder = 'F:\data_for_avishek\LoganProject\output\';
 num_occurences = accumarray(ic,1);
 
 Dataset_PCA = [];
-for i =1:5%length(unique_syllable)
+for i =1:length(unique_syllable)
     rows = (char(TotalDataTable.SyllableLabels)==unique_syllable(i));
     FeatureMatrix_subset = TotalDataTable(rows,...
                                 {'MeanFrequency',...
@@ -94,19 +94,21 @@ end
 
 Mean_FileName(cellfun('isempty',Mean_FileName)) = [];
 
-disp('Mean Files for individual subset');
-Mean_FileName
+disp('Mean Files for individual syallables');
+for i = 1:size(Mean_FileName,2)
+   disp([char(Mean_FileName(i))]) 
+end
 
 % indx = find((contains(TotalDataTable.FileName,Mean_FileName(1))));
 
 %%% Plots and saves the median files only
 for i = 1:size(Mean_FileName,2)
     indx = find((contains(TotalDataTable.FileName,Mean_FileName(i))));
-    disp(['Processing ',char(TotalDataTable.FileName(indx(1)))])
+    disp(['Saving ',char(TotalDataTable.FileName(indx(1)))])
     sptemp = spec_plot_save(cell2mat(TotalDataTable.Audio(indx(1))),TotalDataTable.SamplingRate(indx(1)),...
         output_folder,char(TotalDataTable.FileName(indx(1))),1);
     SpectralMatrix(indx(1)) = {sptemp};
-    audiowrite(strcat(output_folder,char(TotalDataTable.FileName(indx(1))),char(TotalDataTable.FileName(indx(1))),'.wav'),...
+    audiowrite(strcat(output_folder,char(TotalDataTable.FileName(indx(1))),'.wav'),...
             cell2mat(TotalDataTable.Audio(indx(1))),TotalDataTable.SamplingRate(indx(1)));
    
     clear sptemp
