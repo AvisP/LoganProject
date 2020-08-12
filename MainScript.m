@@ -8,6 +8,7 @@ dataset_name = 'redorng15';
 shift_time = 20*10^-3;  % Amount of set 
 
 plot_save_all_files = 0; % Set to 1 if want to save all files else set to 0
+plot_axes_label = 0; % Set to 1 if axes label wanted on save dfigure else 0
 
 dirf(strcat(parent_dir,'motif*.wav'),'motifbatch.txt');
 
@@ -42,9 +43,12 @@ for i=1:length(temp_list)
                 tindx_offset = find(time>=offset_secs);
 
                 timeSeriesData(counter) = {data(tindx_onset(1):tindx_offset(1))};    
-
-
-                data_labels(counter) = strcat(temp_list(i),'_',char(labels(kk)));
+                %%% Loop to check if there is a capital label
+                if isstrprop(char(labels(kk)),'upper')
+                    data_labels(counter) = strcat(temp_list(i),'_',char(labels(kk)),'cap');
+                else
+                    data_labels(counter) = strcat(temp_list(i),'_',char(labels(kk)));
+                end
                 syllable_labels(counter) = {(char(labels(kk)))};
                 FeatureMatrix(counter,:) = feature_vect_test_logan(timeSeriesData{counter},rate);
                 SamplingRate(counter) = rate;
@@ -69,7 +73,7 @@ TotalDataTable = [T T2 T3 T1 FM];
 for i = 1:size(TotalDataTable,1)
     display(['Processing ',char(TotalDataTable.FileName(i))])
     sptemp = spec_plot_save(cell2mat(TotalDataTable.Audio(i)),TotalDataTable.SamplingRate(i),...
-        output_folder,char(TotalDataTable.FileName(i)),plot_save_all_files);
+        output_folder,char(TotalDataTable.FileName(i)),plot_save_all_files,plot_axes_label);
     SpectralMatrix(i) = {sptemp};
     if plot_save_all_files
         print('In Loop')
@@ -91,5 +95,5 @@ for i =1:length(unique_syllable)
    display(['        ' unique_syllable(i) '           --   ' num2str(num_occurences(i))])    
 end
 
-save(strcat('Table_',dataset_name,'.mat'),'TotalDataTable')
+% save(strcat('Table_',dataset_name,'.mat'),'TotalDataTable')
 

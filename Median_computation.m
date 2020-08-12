@@ -3,6 +3,7 @@ clear;clc;
 load('Table_pu17pu18.mat')
 
 output_folder = 'F:\data_for_avishek\LoganProject\output\';
+plot_axes_label = 0; % Set to 1 if axes label wanted on save dfigure else 0
 
 [unique_syllable,ia,ic] = unique(char(TotalDataTable.SyllableLabels),'stable');
 num_occurences = accumarray(ic,1);
@@ -106,7 +107,7 @@ for i = 1:size(Mean_FileName,2)
     indx = find((contains(TotalDataTable.FileName,Mean_FileName(i))));
     disp(['Saving ',char(TotalDataTable.FileName(indx(1)))])
     sptemp = spec_plot_save(cell2mat(TotalDataTable.Audio(indx(1))),TotalDataTable.SamplingRate(indx(1)),...
-        output_folder,char(TotalDataTable.FileName(indx(1))),1);
+        output_folder,char(TotalDataTable.FileName(indx(1))),1,plot_axes_label);
     SpectralMatrix(indx(1)) = {sptemp};
     audiowrite(strcat(output_folder,char(TotalDataTable.FileName(indx(1))),'.wav'),...
             cell2mat(TotalDataTable.Audio(indx(1))),TotalDataTable.SamplingRate(indx(1)));
