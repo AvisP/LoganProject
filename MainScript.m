@@ -95,5 +95,5 @@ for i =1:length(unique_syllable)
    display(['        ' unique_syllable(i) '           --   ' num2str(num_occurences(i))])    
 end
 
-% save(strcat('Table_',dataset_name,'.mat'),'TotalDataTable')
+save(strcat('Table_',dataset_name,'.mat'),'TotalDataTable')
 

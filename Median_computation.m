@@ -70,20 +70,20 @@ for i =1:length(unique_syllable)
 %     Mean_FileName_dir(i) = FeatureMatrix_subset_info.FileName(find(FeatureMatrix_subset_info.Mean_distance == min(Subset_distance_from_mean_dir)));
 %     Mean_FileName_undir(i) = FeatureMatrix_subset_info.FileName(find(FeatureMatrix_subset_info.Mean_distance == min(Subset_distance_from_mean_undir)));
     Mean_FileName(i) = FeatureMatrix_subset_info.FileName(find(FeatureMatrix_subset_info.Mean_distance == min(Subset_distance_from_mean)));
-%     if size(explained,1) == 1
-%         explained =  cat(1,explained,[0;0;0;0;0]);
-%     elseif size(explained,1) == 2
-%         explained =  cat(1,explained,[0;0;0;0]);
-%     elseif size(explained,1) == 3
-%         explained = cat(1,explained,[0;0;0]);
-%     elseif size(explained,1) == 4
-%         explained = cat(1,explained,[0;0]);
-%     elseif size(explained,1) == 5
-%         explained = cat(1,explained,0);     
-%     end
-    if size(explained,1) == 5
+    if size(explained,1) == 1
+        explained =  cat(1,explained,[0;0;0;0;0]);
+    elseif size(explained,1) == 2
+        explained =  cat(1,explained,[0;0;0;0]);
+    elseif size(explained,1) == 3
+        explained = cat(1,explained,[0;0;0]);
+    elseif size(explained,1) == 4
+        explained = cat(1,explained,[0;0]);
+    elseif size(explained,1) == 5
         explained = cat(1,explained,0);     
     end
+%     if size(explained,1) == 5
+%         explained = cat(1,explained,0);     
+%     end
     explained_var_total(i,:) = explained;
     Dataset_PCA = [ Dataset_PCA; FeatureMatrix_subset_info];
     
