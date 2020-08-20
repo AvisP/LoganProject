@@ -1,4 +1,5 @@
 /output/*
+/dataset/*
 *.mat
 *.ps
 *.asv
